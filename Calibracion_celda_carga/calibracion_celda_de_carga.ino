@@ -1,0 +1,28 @@
+#include "HX711.h"
+
+#define DOUT  A1
+#define CLK  A0
+
+HX711 balanza(DOUT, CLK);
+
+void setup() {
+  Serial.begin(9600);
+  Serial.print("Lectura del valor del ADC:  ");
+  Serial.println(balanza.read());
+  Serial.println("No ponga ningun  objeto sobre la balanza");
+  Serial.println("Destarando...");
+  Serial.println("La escala por defecto es 1");
+  Serial.println("El peso actual es considerado Tara.");
+  balanza.set_scale(); //La escala por defecto es 1
+  balanza.tare(20);  //El peso actual es considerado Tara.
+  Serial.println("Coloque un peso conocido:");
+  
+}
+
+
+void loop() {
+
+  Serial.print("Valor de lectura:  ");
+  Serial.println(balanza.get_value(10),3);
+  delay(100);
+}
